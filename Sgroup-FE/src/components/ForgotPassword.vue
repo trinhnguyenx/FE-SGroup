@@ -20,7 +20,7 @@
                     <div class="flex justify-between items-center w-full">
                         <div>User Management</div>
                         <button @click="dropdown(1)">
-                            <img src="../icon/drop.svg" alt="">
+                            <!-- <img src="../icon/drop.svg" alt=""> -->
                         </button>
                     </div>
                     <div id="1" class="flex flex-col gap-6">

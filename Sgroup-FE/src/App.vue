@@ -9,7 +9,7 @@
   <script >
   import FormLogin from './components/FormLogin.vue'
   import FormRegister from './components/FormRegister.vue'
-  import HeaderPage from './components/HeaderPage.vue'
+  import HeaderPage from './components/MainPage.vue'
   import UserList from './components/UserList.vue'
   import ForgotPassword from './components/ForgotPassword.vue'
   import UserDetail from './components/UserDetail.vue'

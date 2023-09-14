@@ -1,6 +1,7 @@
 
 
 <template>
+      <router-link to="/home" class="bg-blue-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105  text-center w-1/6 h-full mt-10 ">Home</router-link>
     <div class="w-full h-screen flex items-center justify-around bg-gray-100 ">
       <div class="bg-white p-8 rounded-md shadow-md w-96  ">
         <div class="text-center text-xl mb-6">Sign in to your dashboard</div>
@@ -61,7 +62,7 @@ export default {
 
     const login = async () => {
   try {
-    const response = await axios.post('http://localhost:3009/auth/login', {
+    const response = await axios.post('/auth/login', {
       email: email.value,
       password: password.value,
     });

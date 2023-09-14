@@ -72,7 +72,7 @@ export default {
             // }
 
         const update = async () => {
-            const response = await axios.put(`http://localhost:3009/auth/${id}`, {
+            const response = await axios.put('/auth/:id', {
                 email: emailupdate.value,
                 name: nameupdate.value,
                 age: ageupdate.value

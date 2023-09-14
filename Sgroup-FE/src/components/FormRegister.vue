@@ -65,7 +65,7 @@ setup() {
 
   const register = () => {
     axios
-      .post('http://localhost:3009/auth/register', {
+      .post('/auth/register', {
 
         password: password.value,
         email: email.value,

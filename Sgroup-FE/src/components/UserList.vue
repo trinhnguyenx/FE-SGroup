@@ -42,7 +42,7 @@ export default {
   setup() {
     const users = ref([]);
     const router = useRouter();
-    const url = `http://localhost:3009/users/`;
+    const url ='/users/';
     const fetchData = async () => {
       try {
         // const pageNumber = router.query.query || 1;
