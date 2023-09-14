@@ -25,7 +25,7 @@
                     </div>
                     <div id="1" class="flex flex-col gap-6">
                         <router-link :to="{path: '/users/:`${id}`'}" class="px-3">User Details</router-link>
-                        <router-link :to="{path: '/'}" class="px-3">User List</router-link>
+                        <router-link :to="{path: '/mainpage'}" class="px-3">User List</router-link>
                     </div>
                 </div>
             </div>

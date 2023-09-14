@@ -10,6 +10,11 @@ import Home from '@/components/MyPage.vue'
 
 const routes = [
   {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -20,7 +25,7 @@ const routes = [
     component: Signup
   },
   {
-    path: '/',
+    path: '/mainpage',
     name: 'MainPage',
     component: MainPage
   },
@@ -39,11 +44,7 @@ const routes = [
     name: 'Pinia',
     component: LoginPinia
   },
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
-  }
+  
 ]
 
 const router = createRouter({
