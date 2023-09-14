@@ -91,7 +91,7 @@ export default {
     //   const id = user.id;
     //   console.log(id)
     //   const Delete = async () => {
-    //     response = await axios.delete(`http://localhost:3009/auth/${id}`);
+    //     response = await axios.delete(`/auth/${id}`);
     //     if(response.status === 201) {
     //       notify({
     //         title: 'Success',
