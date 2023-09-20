@@ -5,7 +5,6 @@
       <div class="w-full pl-[200px]">
           <NavBar />
           <UserList v-if="status === 'user'"/>
-          <UserDetail v-if="status === 'user-detail'"/>
       </div>
   </div>
 
@@ -15,9 +14,9 @@
 import UserList from './UserList.vue';
 import NavBar from '../layouts/NavBar.vue';
 import SideBar from '../layouts/SideBar.vue';
-import UserDetail from './UserDetail.vue';
-
+import UserDetail from './FormUpdate.vue';
 export default {
+
     setup() {
   
   },
@@ -30,7 +29,7 @@ export default {
       UserList,
       NavBar,
       SideBar,
-      UserDetail
+      UserDetail,
   }
 }
 </script>

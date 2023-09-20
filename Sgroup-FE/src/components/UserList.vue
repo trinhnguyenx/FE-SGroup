@@ -3,9 +3,9 @@
 <div class="flex justify-between items-center">
     <input
     class="border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300 p-2" placeholder="Find User" v-model="searchText">
-    <button  @click ="toUserDetail" class=" p-2 font-bold text-xl bg-green-400 text-white rounded-md mr-14">
+    <router-link to="/register"  class=" p-2 font-bold text-xl bg-green-400 text-white rounded-md mr-14">
         Create New
-    </button>
+    </router-link>
 </div>
 
 <div class="w-full">
@@ -22,7 +22,7 @@
           </thead>
     </table>
     <div  v-for="(user) in filteredUsers" :key="user.id" class="border-b-2">
-        <UserCard :user="user" class="w-full" @showPopup="showPopup" @onDelete="onDelete"/>
+        <UserCard :user="user" class="w-full" @showPopup="showPopup"/>
     </div>
 </div>
 </div>
@@ -45,9 +45,6 @@ export default {
     const url ='/users/';
     const fetchData = async () => {
       try {
-        // const pageNumber = router.query.query || 1;
-      // const PAGE_SIZE = router.query.paging || 10;
-
         const response = await axios.get(url, {
           headers: {
             Authorization: JSON.parse(localStorage.getItem('accessToken'))
@@ -128,10 +125,6 @@ export default {
         user.isHidden = user.isHidden === 'hidden' ? 'block' : 'hidden';
       }
     },
-    onDelete(id) {
-            this.$emit('deleteUser', id);
-            this.closeAllPopup();
-        },
 
     beforeMount(){
         try{
@@ -144,9 +137,6 @@ export default {
         }
 
     },
-    toUserDetail() {
-        this.$router.push({path:`/users-detail/${this.id}`});
-    }
     
     
 

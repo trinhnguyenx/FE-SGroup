@@ -50,6 +50,7 @@ import { ref } from 'vue';
 import axios from 'axios'; 
 import { notify } from "@kyvg/vue3-notification";
 import { useRouter } from 'vue-router'
+import jwtDecode from 'jwt-decode'
 
 export default {
   emits: ['getUserList','getUserList'],
@@ -58,8 +59,6 @@ export default {
     const email = ref('');
     const password = ref('');
     const accessToken = ref('localStore.getItem("accessToken")');
-    const userId = ref('localStore.getItem("userId")');
-
     const login = async () => {
   try {
     const response = await axios.post('/auth/login', {
@@ -69,17 +68,34 @@ export default {
 
     if (response.data.data.token) {  
       console.log('ok')         
-      console.log(response.data.data.id)
       localStorage.setItem('accessToken', JSON.stringify(response.data.data.token));
-      localStorage.setItem('userId', response.data.data.user.id);
       accessToken.value = localStorage.getItem('accessToken');
-      userId.value = localStorage.getItem('userId');
-      notify({
-        title: "Welcome Back",
-        text: "Hello " + response.data.data.user.name,
-        type: 'success'
-      });
-      router.push({path: '/mainpage'});
+      if(accessToken.value) {
+        try { 
+          const decodedToken = jwtDecode(accessToken.value);
+          const roles = decodedToken.role;
+          const nameDecoded = decodedToken.name;
+          console.log(decodedToken);
+          console.log(roles);
+          if(roles === 'admin') {
+            router.push({path: '/mainpage'});
+            notify({
+              title: "Welcome Back",
+              text: "Hello " + nameDecoded,
+              type: 'success'
+            });
+          } else {
+            router.push({path: '/userpage'});
+            notify({
+              title: "Welcome Back",
+              text: "Hello " + nameDecoded,
+              type: 'success'
+            });
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
       return response.data;
     }
   } catch (error) {
@@ -108,10 +124,6 @@ export default {
     toSignup(){
         this.$router.push({path:'/register'});
     },
-    logout() {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('userId')
-        },
   }, 
 };
 

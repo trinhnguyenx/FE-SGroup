@@ -1,4 +1,24 @@
 <template>
+   <div class="fixed inset-0 flex items-center justify-center z-50" v-if="showConfirmDialog">
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+      <p class="text-lg font-semibold">Bạn có chắc muốn xóa không?</p>
+      <div class="mt-4 flex justify-end">
+        <button
+          @click="Delete(user.id)"
+          class="bg-red-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-600"
+        >
+          Xóa
+        </button>
+        <button
+          @click="cancelDelete"
+          class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400"
+        >
+          Hủy
+        </button>
+      </div>
+    </div>  
+  </div>
+  <!--  -->
     <div  class="w-full flex items-center space-x-4 z-1000">
       <div class="flex items-center p-4 space-x-4 w-1/6">
         <img class="w-10 h-10 rounded-full" :src="avatar" alt="avatar" />
@@ -38,6 +58,7 @@
           
         >
           <button
+          @click="toEdit"
             class="popup hover:bg-gray-400 hover:text-white text-gray-900 group flex items-center w-full px-2 py-2 text-sm"
           >
             <svg
@@ -58,7 +79,7 @@
             
           </button>
           <button
-          @click="Delete"
+          @click="openDelete"
             class="popup hover:bg-red-400 hover:text-white text-gray-900 group flex items-center w-full px-2 py-2 text-sm"          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -85,36 +106,43 @@
 <script>
 import { notify } from "@kyvg/vue3-notification";
 import axios from 'axios';
+import { useRouter,useRoute } from 'vue-router'
 
 export default {
-    // setup() {
-    //   const id = user.id;
-    //   console.log(id)
-    //   const Delete = async () => {
-    //     response = await axios.delete(`/auth/${id}`);
-    //     if(response.status === 201) {
-    //       notify({
-    //         title: 'Success',
-    //         text: 'Delete user successfully',
-    //         type: 'success'
-    //       });
-    //     } else {
-    //             notify({
-    //                 type: "error",
-    //                 title: "Error",
-    //                 text: "Update user failed"
-    //             });
-    //         }
-    //   }
-    //   return {
-    //     Delete
-    //   }
-    // },
+    setup() {
+      const router = useRouter();
+      const route = useRoute();
+      const Delete = async (userId) => {
+        const response = await axios.delete(`/auth/delete/${userId}`, 
+        {
+        headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
+          }, 
+        });
+        if(response.status === 201) {
+          notify({
+                    type: "suscess",
+                    title: "Success",
+                    text: "Delete user successfully"
+                });
+        } else {
+                notify({
+                    type: "error",
+                    title: "Error",
+                    text: "Update user failed"
+                });
+            }
+      }
+      return {
+        Delete
+      }
+    },
     data(){
       return{
           status:"Active",
           lastActivity: "1 min ago",
           avatar: "https://i.pravatar.cc/300",
+          showConfirmDialog: false,
       }
   },
     props: {
@@ -128,7 +156,16 @@ export default {
         showPopup(id) {
             this.$emit('showPopup', id)
         },
-    },
+        toEdit() {
+          this.$router.push({path: `/users-edit/${this.user.id}`});
+        },
+        cancelDelete() {
+          this.showConfirmDialog = false;
+        },
+        openDelete() {
+          this.showConfirmDialog = true;
+        },
+      },
     computed: {
     },
 }

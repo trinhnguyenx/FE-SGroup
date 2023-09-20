@@ -8,18 +8,13 @@
   
   <script >
   import FormLogin from './components/FormLogin.vue'
-  import FormRegister from './components/FormRegister.vue'
   import HeaderPage from './components/MainPage.vue'
   import UserList from './components/UserList.vue'
-  import ForgotPassword from './components/ForgotPassword.vue'
-  import UserDetail from './components/UserDetail.vue'
+  import UserUpdate from './components/FormUpdate.vue'
   import Counter from './components/Counter.vue'
   import Login from './pages/Login.vue'
-  const tabs = [
-  FormLogin,
-  FormRegister,
-  UserList,
-]
+  import FormRegister from './components/FormRegister.vue'
+  import UserPage from './components/UserPage.vue'
 
   export default {
     name: 'App',
@@ -28,10 +23,10 @@
       FormLogin,
       FormRegister,
       UserList,
-      ForgotPassword,
-      UserDetail,
+      UserUpdate,
       Counter,
       Login,
+      UserPage,
     },
     
     data() {

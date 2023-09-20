@@ -6,11 +6,18 @@
             <div id="app" class="p-4 flex flex-col gap-4">
                 <p class="font-bold">Account Details</p>
                 <div class="flex gap-3">
-                    <img src="https://i.pravatar.cc/300" class="max-w-[70px] rounded-lg aspect-square">
+                    <img :src="src" class="max-w-[70px] rounded-lg aspect-square">
                     <div class="">
-                        <button class="bg-green-500 text-white p-2 rounded-md font-semibold">
+                        <button @click="openFileInput" class="bg-green-500 text-white p-2 rounded-md font-semibold">
                             Upload new photo
                         </button>
+                        <input
+                            ref="fileInput"
+                            type="file"
+                            accept="image/*"
+                            style="display: none;"
+                            @change="handleFileChange"
+                        />
                         <div class="text-base font-normal">
                             Allowed JPG, GIF or PNG. Max size of 800K
                         </div>
@@ -18,23 +25,23 @@
                 </div>
                 <hr>
                 <div class="flex flex-col gap-3">
-                    <input  v-model="emailupdate" type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Email">
-                    <input  v-model="nameupdate"  type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Name">
-                    <input  v-model="ageupdate"   type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Age">
+                    <input  v-model="email" type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Email">
+                    <input  v-model="name"  type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Name">
+                    <input  v-model="age"   type="text" class="border-2 px-6 py-3 rounded-md" placeholder="Age">
                     <div class="border-2 rounded-md px-6 py-4">
                         <div class="flex justify-between">
                             <div>Male</div>
-                            <input type="radio" id="html" name="fav_language" value="HTML" >
+                            <input type="radio" value="HTML" >
                         </div>
                         <br>
                         <div class="flex justify-between">
                             <div for="css">Female</div>
-                            <input type="radio" id="css" name="fav_language" value="CSS">
+                            <input type="radio" value="CSS">
                         </div>
                         <br>
                         <div class="flex justify-between">
                             <div for="javascript">Apache Helikopter</div>
-                            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                            <input type="radio" value="JavaScript">
                         </div>
                     </div>
                 </div>
@@ -57,52 +64,57 @@ import { notify } from "@kyvg/vue3-notification";
 
 export default {
     setup () {
-        const router = useRouter();
-        // const route = useRoute();
-        const emailupdate = ref('');
-        const nameupdate = ref('');
-        const ageupdate = ref('');
-        // const idFromRoute = route.params.id;
-        const id = localStorage.getItem('userId');
-        console.log(id)
-
-            // if (!id && idFromRoute) {
-            //     // Nếu không có ID trong localStorage nhưng có từ route, hãy lưu nó vào localStorage
-            //     localStorage.setItem('userId', idFromRoute);
-            // }
-
+        const router = useRouter()
+        const route = useRoute();
+        const email= ref('');
+        const name= ref('');
+        const age = ref('');
+        const currentDate = ref(new Date().now);
+        const id = route.params.id;
+        console.log(id);
         const update = async () => {
-            const response = await axios.put('/auth/:id', {
-                email: emailupdate.value,
-                name: nameupdate.value,
-                age: ageupdate.value
-            })
-            console.log(response);
+            try {
+                const response = await axios.put(`/auth/update/${id}`, {
+                email: email.value,
+                name: name.value,
+                age: age.value,
+                updated_at: currentDate.value,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
+                },  
+            });
             if(response.status === 201) {
                 notify({
                     type: "success",
                     title: "Success",
                     text: "Update user successfully"
                 });
-                // router.push('/users');
-            } else {
+                return response.data.data;
+            }
+            } catch(error) {
+                console.log(error)
                 notify({
                     type: "error",
                     title: "Error",
                     text: "Update user failed"
                 });
             }
+           
         }
         return {
-            emailupdate,
-            nameupdate,
-            ageupdate,
+            email,
+            name,   
+            age,
+            currentDate,
             update,
-            id
         }   
     },
-    data(){
-      
+    data() {
+        return {
+           src: null,
+           fileInput: null,
+        };        
     },
     components: {
         SideBar,
@@ -113,28 +125,23 @@ export default {
             this.nameupdate = '';
             this.emailupdate = '';
             this.ageupdate = '';
-        }
+        },
+        openFileInput() {
+        // Khi người dùng nhấn nút "Upload new photo", kích hoạt thẻ input ẩn
+        this.$refs.fileInput.click();
+        },
+        handleFileChange(event) {
+        // Xử lý sự kiện khi người dùng chọn một tệp ảnh
+        this.fileInput = event.target.files[0];
+        this.$emit('input',this.fileInput);
+        let reader = new FileReader();
+        reader.readAsDataURL(this.fileInput);
+        reader.onload = (e) => {
+            this.src = e.target.result;
+        };
+
     },
-    // mounted() {
-    //     console.log("ok user");
-    //     console.log(this.$router)
-    //     this.id = this.$router.params.id;
-    //     console.log(this.id)
-    //     axios({
-    //         method: 'get',
-    //         url: `http://localhost:3009/users/${this.id}`
-    //     })
-    //     .then((response) => {
-    //         console.log(response);
-    //         this.user = response.data[0];
-    //         console.log(this.user)
-    //         document.getElementById('name').value = this.user.name;
-    //         document.getElementById('email').value = this.user.email;
-    //         document.getElementById('age').value = this.user.age;
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
+
+    },
 }
 </script>

@@ -2,10 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/components/FormLogin.vue'
 import Signup from '@/components/FormRegister.vue'
 import MainPage from '@/components/MainPage.vue'
-import UserDetail from '@/components/UserDetail.vue'
+import Update from '@/components/FormUpdate.vue'
 import Counter from '@/components/Counter.vue'
 import LoginPinia from '@/pages/Login.vue'
 import Home from '@/components/MyPage.vue'
+import UserPage from '@/components/UserPage.vue'
 
 
 const routes = [
@@ -30,9 +31,9 @@ const routes = [
     component: MainPage
   },
   {
-    path: '/users-detail/:id',
-    name: 'UserDetail',
-    component: UserDetail
+    path: '/users-edit/:id',
+    name: 'Update',
+    component: Update
   },
   {
     path: '/counter',
@@ -43,6 +44,11 @@ const routes = [
     path: '/loginPinia',
     name: 'Pinia',
     component: LoginPinia
+  },
+  {
+    path: '/userpage',
+    name: 'UserPage',
+    component: UserPage 
   },
   
 ]
