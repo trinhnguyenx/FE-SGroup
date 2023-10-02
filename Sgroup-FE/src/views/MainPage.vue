@@ -14,7 +14,7 @@
 import UserList from './UserList.vue';
 import NavBar from '../layouts/NavBar.vue';
 import SideBar from '../layouts/SideBar.vue';
-import UserDetail from './FormUpdate.vue';
+import UserDetail from './auth/FormUpdate.vue';
 export default {
 
     setup() {

@@ -126,17 +126,17 @@ export default {
       }
     },
 
-    beforeMount(){
-        try{
-            const token = JSON.parse(localStorage.getItem('accessToken'));
-        }
-        catch(e) {
-            console.log(e.message)
-            localStorage.removeItem('accessToken');
-            this.$router.push('/login');
-        }
+    // beforeMount(){
+    //     try{
+    //         const token = JSON.parse(localStorage.getItem('accessToken'));
+    //     }
+    //     catch(e) {
+    //         console.log(e.message)
+    //         localStorage.removeItem('accessToken');
+    //         this.$router.push('/login');
+    //     }
 
-    },
+    // },
     
     
 

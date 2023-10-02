@@ -1,5 +1,6 @@
 <template>
-   <div class="fixed inset-0 flex items-center justify-center z-50" v-if="showConfirmDialog">
+   <div>
+    <div class="fixed inset-0 flex items-center justify-center z-50" v-if="showConfirmDialog">
     <div class="bg-white p-8 rounded-lg shadow-lg">
       <p class="text-lg font-semibold">Bạn có chắc muốn xóa không?</p>
       <div class="mt-4 flex justify-end">
@@ -100,6 +101,7 @@
         </div>
       </div>
     </div>
+   </div>
   </template>
   
 
@@ -138,11 +140,11 @@ export default {
       }
     },
     data(){
-      return{
+      return {
           status:"Active",
           lastActivity: "1 min ago",
-          avatar: "https://i.pravatar.cc/300",
           showConfirmDialog: false,
+          avatar: this.user.avatar,
       }
   },
     props: {
@@ -166,7 +168,6 @@ export default {
           this.showConfirmDialog = true;
         },
       },
-    computed: {
-    },
+    
 }
 </script>

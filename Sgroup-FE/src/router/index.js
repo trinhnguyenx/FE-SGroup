@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Login from '@/components/FormLogin.vue'
-import Signup from '@/components/FormRegister.vue'
-import MainPage from '@/components/MainPage.vue'
-import Update from '@/components/FormUpdate.vue'
+import Login from '@/views/auth/FormLogin.vue'
+import Signup from '@/views/auth/FormRegister.vue'
+import MainPage from '@/views/MainPage.vue'
+import Update from '@/views/auth/FormUpdate.vue'
 import Counter from '@/components/Counter.vue'
-import LoginPinia from '@/pages/Login.vue'
-import Home from '@/components/MyPage.vue'
+import Home from '@/views/dashboard/Mypage.vue'
 import UserPage from '@/components/UserPage.vue'
 
 
@@ -41,11 +40,6 @@ const routes = [
     component: Counter
   },
   {
-    path: '/loginPinia',
-    name: 'Pinia',
-    component: LoginPinia
-  },
-  {
     path: '/userpage',
     name: 'UserPage',
     component: UserPage 
@@ -58,8 +52,5 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from) => {
-//   console.log(to)
-// })
 
 export default router

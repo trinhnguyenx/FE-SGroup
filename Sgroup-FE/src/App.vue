@@ -7,27 +7,8 @@
   </template>
   
   <script >
-  import FormLogin from './components/FormLogin.vue'
-  import HeaderPage from './components/MainPage.vue'
-  import UserList from './components/UserList.vue'
-  import UserUpdate from './components/FormUpdate.vue'
-  import Counter from './components/Counter.vue'
-  import Login from './pages/Login.vue'
-  import FormRegister from './components/FormRegister.vue'
-  import UserPage from './components/UserPage.vue'
-
   export default {
-    name: 'App',
-    components:{
-      HeaderPage,
-      FormLogin,
-      FormRegister,
-      UserList,
-      UserUpdate,
-      Counter,
-      Login,
-      UserPage,
-    },
+
     
     data() {
     return {
